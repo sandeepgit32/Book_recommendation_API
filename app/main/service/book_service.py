@@ -3,20 +3,25 @@ from app.main import db
 from app.main.model.book import Book
 from app.main.model.author import Author
 from app.main.model.book_author import BookAuthor
+from app.main.model.category import Category
 from sqlalchemy import text
 
 
 def save_new_book(data):
     book = Book.query.filter_by(name=data['name']).first()
     if not book:
-        author_id=data['author_id']
-        author = Author.query.filter(Author.public_id == author_id).one()
+        category_id = data['category_id']
+        category = Category.query.filter(Category.public_id == category_id).one()
+        if 'public_id' in data.keys():
+            public_id = data['public_id']
+        else:
+            public_id = str(uuid.uuid4())
         new_book = Book(
-            public_id=str(uuid.uuid4()),
+            public_id=public_id,
             name=data['name'],
             publisher=data['publisher'],
             rating=data['rating'],
-            author=author
+            category=category
         )
         save_changes(new_book)
         response_object = {

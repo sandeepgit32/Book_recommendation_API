@@ -26,15 +26,15 @@ class AuthorList(Resource):
         return save_new_author(data=data)
 
 
-@api.route('/<id>')
-@api.param('id', 'The Author identifier')
+@api.route('/<public_id>')
+@api.param('public_id', 'The Author identifier')
 @api.response(404, 'Author not found.')
 class Author(Resource):
     @api.doc('get a author')
     @api.marshal_with(_authorWithBooks)
-    def get(self, id):
+    def get(self, public_id):
         """get a author given its identifier"""
-        author = get_an_author(id)
+        author = get_an_author(public_id)
         if not author:
             api.abort(404)
         else:

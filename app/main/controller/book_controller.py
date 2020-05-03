@@ -5,21 +5,22 @@ from ..util.dto import BookDto
 from ..service.book_service import save_new_book, get_all_books, get_a_book
 
 api = BookDto.api
-_bookGet = BookDto.bookGet
-_bookPost = BookDto.bookPost
+_book = BookDto.book
+_bookWithCategory = BookDto.book_with_category
+_bookWithAuthors = BookDto.book_with_authors
 
 
 @api.route('/')
 class BookList(Resource):
     @api.doc('get list of books')
-    @api.marshal_list_with(_bookGet, envelope='data')
+    @api.marshal_list_with(_bookWithCategory, envelope='data')
     def get(self):
         """List all books"""
         return get_all_books()
 
     @api.response(201, 'Book successfully added.')
     @api.doc('create a new book')
-    @api.expect(_bookPost, validate=True)
+    @api.expect(_bookWithCategory, validate=True)
     def post(self):
         """Creates a new Book """
         data = request.json
@@ -31,7 +32,7 @@ class BookList(Resource):
 @api.response(404, 'Book not found.')
 class Book(Resource):
     @api.doc('get a book')
-    @api.marshal_with(_bookGet)
+    @api.marshal_with(_bookWithAuthors)
     def get(self, public_id):
         """get a book given its identifier"""
         book = get_a_book(public_id)
