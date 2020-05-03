@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Resource
 
 from ..util.dto import CategoryDto
-from ..service.category_service import save_new_category, get_all_categories, get_a_category
+from ..service.category_service import get_all_categories, get_a_category
 
 api = CategoryDto.api
 _category = CategoryDto.category
@@ -16,14 +16,6 @@ class CategoryList(Resource):
     def get(self):
         """List all categories"""
         return get_all_categories()
-
-    @api.response(201, 'Category successfully added.')
-    @api.doc('create a new category')
-    @api.expect(_category, validate=True)
-    def post(self):
-        """Creates a new category """
-        data = request.json
-        return save_new_category(data=data)
 
 
 @api.route('/<public_id>')

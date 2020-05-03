@@ -13,14 +13,14 @@ _bookWithAuthors = BookDto.book_with_authors
 @api.route('/')
 class BookList(Resource):
     @api.doc('get list of books')
-    @api.marshal_list_with(_bookWithCategory, envelope='data')
+    @api.marshal_list_with(_bookWithAuthors, envelope='data')
     def get(self):
         """List all books"""
         return get_all_books()
 
     @api.response(201, 'Book successfully added.')
     @api.doc('create a new book')
-    @api.expect(_bookWithCategory, validate=True)
+    @api.expect(_bookWithAuthors, validate=True)
     def post(self):
         """Creates a new Book """
         data = request.json

@@ -34,7 +34,8 @@ class BookDto:
         'rating': fields.Float(description='rating')
     })
     book_with_category = api.inherit('book with category', book, {
-        'category_id': fields.String(attribute='category.public_id')
+        'category_id': fields.String(attribute='category.public_id'),
+        'category_name': fields.String(attribute='category.name')
     })
     book_with_authors = api.inherit('book with authors', book_with_category, {
         'authors': fields.List(fields.Nested(BookAuthorDto.author))
