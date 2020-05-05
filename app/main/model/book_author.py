@@ -1,6 +1,7 @@
 from .. import db
 
 class BookAuthor(db.Model):
+    """ BookAuthor Model for storing book and author related details togather"""
     __tablename__ = "book_author"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

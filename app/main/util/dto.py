@@ -6,11 +6,11 @@ class BookAuthorDto:
         'book_id': fields.String(required=True, description='book ID', attribute='book_id'),
         'author_id': fields.String(required=True, description='author ID', attribute='author_id'),
     })
-    book = api.model('bookauthor', {
+    book = api.model('books', {
         'book_id': fields.String(required=True, description='book ID', attribute='book_id'),
         'book_name': fields.String(required=True, description='book name', attribute='book.name'),
     })
-    author = api.model('bookauthor', {
+    author = api.model('authors', {
         'author_id': fields.String(required=True, description='author ID', attribute='author_id'),
         'author_name': fields.String(required=True, description='author name', attribute='author.name'),
     })
