@@ -3,17 +3,21 @@ from flask_restplus import Resource
 
 from ..util.dto import BookDto
 from ..service.book_service import save_new_book, get_all_books, get_a_book
+from app.main.util.decorator import token_required
+
 
 api = BookDto.api
 _book = BookDto.book
-_bookWithCategory = BookDto.book_with_category
+# _bookWithCategory = BookDto.book_with_category
 _bookWithAuthors = BookDto.book_with_authors
-
+_bookWithRatings = BookDto.book_with_user_ratings
 
 @api.route('/')
 class BookList(Resource):
     @api.doc('get list of books')
     @api.marshal_list_with(_bookWithAuthors, envelope='data')
+    @token_required
+    # @api.doc(security='apikey')
     def get(self):
         """List all books"""
         return get_all_books()
@@ -32,7 +36,7 @@ class BookList(Resource):
 @api.response(404, 'Book not found.')
 class Book(Resource):
     @api.doc('get a book')
-    @api.marshal_with(_bookWithAuthors)
+    @api.marshal_with(_bookWithRatings)
     def get(self, public_id):
         """get a book given its identifier"""
         book = get_a_book(public_id)

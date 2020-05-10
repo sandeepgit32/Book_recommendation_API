@@ -29,7 +29,7 @@ def save_new_book(data):
             public_id=book_id,
             name=data['name'],
             publisher=data['publisher'],
-            rating=data['rating'],
+            # rating=data['rating'],
             category=new_category
         )
         save_changes(new_book)
